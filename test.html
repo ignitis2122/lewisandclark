@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: palevioletred;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      body {
+        background-color: #e8e5d8;
+        margin: 0;
+      }
+      .modal-content {
+        background: #e8e5d8;
+        padding: 2rem;
+        max-width: 400px;
+        border-radius: 8px;
+        text-align: center;
+        font-family: "source-serif-pro", serif;
+        font-weight: 400.0;
+        font-style: normal;
+        font-size: 14px;
+      }
+      .modal button {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+      .title-header {
+        max-width: 100%;
+        text-align: center;
+        font-family: "source-serif-pro", serif;
+        background-color: #e8e5d8;
+        color: black;
+        margin: 0;
+        padding: 15rem 0rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .title-main {
+        font-size: 60px;
+        font-weight: 400;
+      }
+      .title-sub {
+        font-size: 25px;
+        font-weight: 400;
+      }
+      p {
+        max-width: 75%;
+        font-family: "source-serif-pro", serif;
+        font-weight: 400;
+        font-style: normal;
+        margin: 0 auto 2rem auto;
+        font-size: 25px;
+      }
+      #scrolly, #scrolly2, #scrolly3, #scrolly4, #scrolly5 {
+        position: relative;
+        padding: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+        .scrolly-overlay {
+        position: relative;
+        padding: 0;
+        max-width: 35rem;
+        margin-left: auto;
+        margin-right: 20px;
+      } 
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        z-index: 0;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: right;
+        flex-direction: column;
+        justify-content: right;
+        margin-bottom: 0;
+      }
+      .step {
+        margin: 0 auto 2rem auto;
+        margin-bottom: 25rem;
+        background-color: transparent;
+        color: black;
+        text-align: center;
+        border: 0px solid red;
+      }
+      .step p {
+        padding: 1rem;
+        font-size: 1.25rem;
+        border: black;
+      }
+      .step2 {
+        margin: 0 auto 2rem auto;
+        margin-bottom: 25rem;
+        background-color: transparent;
+        color: black;
+        text-align: left;
+        border: 0px solid red;
+      }
+      .step2 p {
+        padding: 1rem;
+        font-size: 1.25rem;
+      }
+
+      /* Part headers (black full-width) */
+      .part-header {
+        max-width: 100%;
+        text-align: center;
+        margin: 0;
+        font-family: "source-serif-pro", serif;
+        font-weight: 400;
+        font-size: 50px;
+        background-color: black;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 15rem 0rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Narrative prose blocks between sections */
+      .narrative {
+        max-width: 950px;
+        text-align: center;
+        background-color: #e8e5d8;
+        font-family: "source-serif-pro", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 30px;
+        padding: 1rem;
+        margin: 0 auto;
+      }
+      .outro1, .outro2 {
+        max-width: 100%;
+        text-align: center;
+        background-color: #e8e5d8;
+        font-family: "source-serif-pro", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 30px;
+        margin: 0;
+        padding: 4rem 15%;
+      }
+
+      /* Zoom/photo containers */
+      .zoomBox {
+        overflow: clip;
+        margin-left: 0vw !important;
+        max-width: 100vw !important;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        -webkit-mask-image: linear-gradient(to right, transparent 30%, black 50%);
+        mask-image: linear-gradient(to right, transparent 30%, black 50%);
+      }
+      .photoDiv {
+        width: auto;
+        height: 100vh;
+        max-height: 100vh;
+        object-fit: contain;
+        margin-right: 0px;
+        margin-left: auto;
+        display: block;
+        transition:
+          margin 1.5s 0s,
+          transform 2.5s 0s;
+        transform-origin: right center;
+      }
+
+      /* Last step in each section - no giant bottom margin */
+      .step.last-step, .step2.last-step {
+        margin-bottom: 0;
+      }
+
+      @media only screen and (min-width: 700px) {
+  #scrolly.side-by-side,
+  #scrolly3.side-by-side,
+  #scrolly4.side-by-side,
+  #scrolly5.side-by-side {
+    display: flex;
+  }
+  #scrolly.side-by-side > div,
+  #scrolly3.side-by-side > div,
+  #scrolly4.side-by-side > div,
+  #scrolly5.side-by-side > div {
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 0.75em;
+  }
+  #scrolly.side-by-side .scrolly-overlay,
+  #scrolly3.side-by-side .scrolly-overlay,
+  #scrolly4.side-by-side .scrolly-overlay,
+  #scrolly5.side-by-side .scrolly-overlay {
+    margin-top: 70vh;
+    order: 0;
+    min-width: 15rem;
+    max-width: 20rem;
+  }
+  #scrolly.side-by-side .sticky-thing,
+  #scrolly3.side-by-side .sticky-thing,
+  #scrolly4.side-by-side .sticky-thing,
+  #scrolly5.side-by-side .sticky-thing {
+    order: 1;
+    flex-grow: 2;
+  }
+}
+
+/* Beat 2 custom layout */
+#scrolly2 {
+  position: relative;
+  display: block;
+}
+#scrolly2 .sticky-thing {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+}
+#zoomBox2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+#scrollyPhoto2 {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  margin: 0;
+  display: block;
+}
+#scrolly2 .scrolly-overlay {
+  position: relative;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: 20px;
+  max-width: 20rem;
+  padding-top: 70vh;
+}
+    </style>
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/3.0.4/scrollama.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
+    <style>
+      @import url("https://use.typekit.net/fhn7ltr.css");
+    </style>
+  </head>
+
+  <body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TITLE
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="title-header">
+      <span class="title-main">Lewis and Clark, 200 Years Later</span>
+      <br><br>
+      <span class="title-sub">by Ignacio Somoza</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BEAT 1: INTRO
+         Sticky visual: map of road trip route (or photo)
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="part-header"><span style="color:#e8e5d8">Beat 1: The Road Trip</span></div>
+
+    <p class="narrative">
+      In March of 2026, I flew to San Francisco with five friends, intending to drive up to Seattle over five days.
+    </p>
+
+    <section id="scrolly" class="side-by-side">
+      <div class="sticky-thing">
+        <div class="zoomBox" id="zoomBox1">
+          <!-- STICKY VISUAL 1: swap src for your map/image -->
+          <img id="scrollyPhoto1" class="photoDiv" src="images/PLACEHOLDER_route_map.jpg">
+          
+        </div>
+      </div>
+      <div class="scrolly-overlay">
+
+        <div class="step" id="b1-step1">
+          <p>We hit many of the major parks of the Pacific Northwest.</p>
+        </div>
+
+        <div class="step" id="b1-step2">
+          <p>Mt. Hood,</p>
+        </div>
+
+        <div class="step" id="b1-step3">
+          <p>Mt. St. Helens,</p>
+        </div>
+
+        <div class="step" id="b1-step4">
+          <p>Mt. Rainier (from afar),</p>
+        </div>
+
+        <div class="step" id="b1-step5">
+          <p>Cape Disappointment (disappointing) and Cape Flattery (flattering),</p>
+        </div>
+
+        <div class="step" id="b1-step6">
+          <p> and my personal favorite - Mount Olympus.</p>
+        </div>
+
+        <div class="step" id="b1-step7">
+          <p>Wait, that's not Olympus. We didn't actually get to see it.<br>We didn't actually get to see Olympus. While I was dying to see the mountain both for its name and its legacy, I wasn't aware that the mountain typically is not visible from outside the national park. I left feeling my trip was incomplete, vowing to return another day to see the mountain.</p>
+          
+        </div>
+
+        <!-- Add more steps here as needed -->
+        <div style="height: 60vh;"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BEAT 2: INTRODUCING THE MAP
+         Sticky visual: Lewis & Clark 1810 map
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="part-header"><span style="color:#e8e5d8">Beat 2: The Map in the Basement</span></div>
+
+    <p class="narrative">
+      One month later, in the basement of Beinecke, a map caught my attention - an intricately drawn, extremely detailed, aesthetically pleasing map of western North America.</p>
+
+    <section id="scrolly2" class="side-by-side">
+      <div class="sticky-thing">
+        <div class="zoomBox" id="zoomBox2">
+          <!-- STICKY VISUAL 2: Lewis & Clark map -->
+          <img id="scrollyPhoto2" class="photoDiv" src="images/PLACEHOLDER_lewisclark_map.jpg">
+          <img id="scrollyPhoto2-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; opacity: 0;">
+        </div>
+      </div>
+      <div class="scrolly-overlay">
+
+        <div class="step2" id="b2-step1">
+          <p>After staring at it for a long time (including with a magnifying glass), I was told by the library's curator, Julia Hernández, that this map was drawn by William Clark himself in 1810 after Lewis and Clark's journey westward.</p>
+        </div>
+
+        <div class="step2" id="b2-step2">
+          <p>Step 2 — History of the map. [expand with curator detail]</p>
+        </div>
+
+        <div class="step2" id="b2-step3">
+          <p>I traced my finger along our road trip route, recalling the views - The Redwoods, Oregon Coast, Mt. Hood, St. Helens, Cape Disappointment, Cape Flattery, Rainier,</p>
+        </div>
+
+        <div class="step2" id="b2-step4">
+          <p>and, Mount Olympus?</p>
+        </div>
+
+        <div class="step2" id="b2-step5">
+          <p>Where Mount Olympus was supposed to be (and the Olympics range), there was a small mountain marking the same as the rest of the smaller mountains on the map, suggesting that they too had not seen it and did not have knowledge of the mountain. </p>
+        </div>
+
+        <!-- Add more steps here as needed -->
+        <div style="height: 60vh;"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BEAT 3: WHAT ELSE IS MISSING?
+         Sticky visual: annotated Lewis & Clark map
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="part-header"><span style="color:#e8e5d8">Beat 3: What Else?</span></div>
+
+    <p class="narrative">
+      After noticing Olympus, I started looking for other omissions.
+    </p>
+
+    <section id="scrolly3" class="side-by-side">
+      <div class="sticky-thing">
+        <div class="zoomBox" id="zoomBox3">
+          <!-- STICKY VISUAL 3: annotated map -->
+          <img id="scrollyPhoto3" class="photoDiv" src="images/PLACEHOLDER_map_anno.jpg">
+        </div>
+      </div>
+      <div class="scrolly-overlay">
+
+        <div class="step" id="b3-step1">
+          <p>Step 1 — Mount Adams: unmarked, only 35 miles from St. Helens.</p>
+        </div>
+
+        <div class="step" id="b3-step2">
+          <p>This was fascinating, considering Adams’ prominence can be seen from many places along the Columbia River Gorge (including, vaguely, by my friends and I) </p>
+    
+        </div>
+        <div class="step" id="b3-step3">
+          <p>which was the path Lewis and Clark traversed around late October and early November of 1805 - around the same time, Clark writes in his journal about extreme rain, hail, and thunderstorms [add journal entry]. I don't blame him for not seeing the mountain.</p>
+          <br>
+          <p>"a tremendious thunder Storm abt. 3 oClock this morning accompanied by wind from the S W. and Hail, this Storm of hard Clap's thunder Lighting and hail until about 6 oClock at intervals    it then became light for a Short time when the heavens became darkined by a black Cloud from the S, W, & a hard rain Suckceeded which lasted untill 12 oClock with a hard wind which raised the Seas tremendiously high braking with great force and fury against the rocks & trees on which we lie, as our Situation became Seriously dangerous,"</p>
+          <img src="files/journal.png" style="max-width: 300px; margin: 0 auto">
+        </div>
+
+        <div class="step" id="b3-step4">
+          <p>Step 4 — North Cascades: understated and ignored. [highlight + photo]</p>
+        </div>
+
+        <div class="step" id="b3-step5">
+          <p>Step 5 — Crater Lake: undiscovered until 1853. [point out absence]</p>
+        </div>
+
+        <div class="step" id="b3-step6">
+          <p>Step 6 — Upper map vs. lower: Spanish vs. English. [annotation]</p>
+        </div>
+
+        <div class="step" id="b3-step7">
+          <p>Step 7 — Beacom quote: "first time anybody saw the western half…"</p>
+        </div>
+
+        <!-- Add more steps here as needed -->
+        <div style="height: 60vh;"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BEAT 4: WHAT DOES IT LOOK LIKE NOW?
+         Sticky visual: modern map or overlay
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="part-header"><span style="color:#e8e5d8">Beat 4: What Does It Look Like Now?</span></div>
+
+    <p class="narrative">
+      Much has changed on the map since Lewis and Clark ventured west.
+    </p>
+
+    <section id="scrolly4" class="side-by-side">
+      <div class="sticky-thing">
+        <div class="zoomBox" id="zoomBox4">
+          <!-- STICKY VISUAL 4: modern map / overlay -->
+          <img id="scrollyPhoto4" class="photoDiv" src="images/PLACEHOLDER_modern_map.jpg">
+        </div>
+      </div>
+      <div class="scrolly-overlay">
+
+        <div class="step2" id="b4-step1">
+          <p>Step 1 — New cities added to the landscape. [add on map]</p>
+        </div>
+
+        <div class="step2" id="b4-step2">
+          <p>Step 2 — Bridges and infrastructure, changing navigation. [add on map]</p>
+        </div>
+
+        <div class="step2" id="b4-step3">
+          <p>Step 3 — Political boundaries: new states, territories. [add on map]</p>
+        </div>
+
+        <div class="step2" id="b4-step4">
+          <p>Step 4 — Manmade lakes & reservoirs. [add on map / Yale Lake]</p>
+        </div>
+
+        <div class="step2" id="b4-step5">
+          <p>Step 5 — The landscape itself changed: Mt. St. Helens eruption.</p>
+        </div>
+
+        <!-- Add more steps here as needed -->
+        <div style="height: 60vh;"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         BEAT 5: CONCLUSION
+         Sticky visual: Nicolas King's Blank Map of 1803
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="part-header"><span style="color:#e8e5d8">Beat 5: The Blank Map</span></div>
+
+    <section id="scrolly5" class="side-by-side">
+      <div class="sticky-thing">
+        <div class="zoomBox" id="zoomBox5">
+          <!-- STICKY VISUAL 5: Nicolas King blank map -->
+          <img id="scrollyPhoto5" class="photoDiv" src="images/PLACEHOLDER_blank_map.jpg">
+        </div>
+      </div>
+      <div class="scrolly-overlay">
+
+        <div class="step" id="b5-step1">
+          <p>Step 1 — Today we can open our phones and see satellite imagery.</p>
+        </div>
+
+        <div class="step" id="b5-step2">
+          <p>Step 2 — We can get directions to Crater Lake or Olympic National Park.</p>
+        </div>
+
+        <div class="step" id="b5-step3">
+          <p>Step 3 — Lewis and Clark left armed only with Nicolas King's Blank Map of 1803.</p>
+        </div>
+
+        <div class="step" id="b5-step4">
+          <p>Step 4 — A clean slate of the western half of the continent — both figuratively and literally.</p>
+        </div>
+
+        <!-- Add more steps here as needed -->
+        <div style="height: 60vh;"></div>
+      </div>
+    </section>
+
+    <div class="outro2">
+      <p>[Closing text here]</p>
+    </div>
+
+    <!-- Mobile Warning Modal -->
+    <div id="deviceModal" class="modal">
+      <div class="modal-content">
+        <span>
+          Wow! One of your friends must be in Aaron Reiss's "Telling Stories With Maps" class — how cool! <br><br>
+          Sadly, this site is meant to be viewed on a computer, so if you are on a phone or tablet then it's gonna look all kinds of wonky and you might get the wrong impression about how amazing this work is.
+        </span>
+        <button id="continueBtn">Continue Anyway</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCROLLYTELLING LOGIC
+    ═══════════════════════════════════════════════════════════ -->
+    <script>
+
+      // ─── BEAT 1 step listeners ───────────────────────────────
+      d3.select("#b1-step1").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/WithStops.jpg");
+      });
+      d3.select("#b1-step2").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/MtHood1.jpg");
+        // Mt. Hood photo/map state
+      });
+      d3.select("#b1-step3").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/StHelens1.jpg");
+        // St. Helens
+      });
+      d3.select("#b1-step4").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/Rainier1.jpg");
+        // Rainier
+      });
+      d3.select("#b1-step5").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/CapeDisAndFlat1.jpg");
+        // Cape Disappointment / Flattery
+      });
+      d3.select("#b1-step6").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/Olympus1.jpg");
+        // Olympus
+      });
+      d3.select("#b1-step7").on('stepin', function(e) {
+      d3.select("#scrollyPhoto1").attr("src", "files/Olympus2.jpg");
+        // "Wait, that's not Olympus"
+      });
+
+      // ─── BEAT 2 step listeners ───────────────────────────────
+      d3.select("#b2-step1").on('stepin', function(e) {
+      d3.select("#scrollyPhoto2").attr("src", "files/hires.png");
+       d3.select("#scrollyPhoto2-overlay")
+        .attr("src", "images/LnCpic.jpg")
+        .style("opacity", "0");
+        // Lewis & Clark map appears
+      });
+      d3.select("#b2-step2").on('stepin', function(e) {
+        d3.select("#scrollyPhoto2-overlay")
+        .attr("src", "images/LnCpic.jpg")
+        .style("opacity", "1");
+        // history detail
+      });
+      d3.select("#b2-step3").on('stepin', function(e) {
+      d3.select("#scrollyPhoto2").attr("src", "files/Tracing1.jpg");
+      d3.select("#scrollyPhoto2-overlay")
+      .attr("src", "images/LnCpic.jpg")
+      .style("opacity", "0");
+        // trace route
+      });
+      d3.select("#b2-step4").on('stepin', function(e) {
+      d3.select("#scrollyPhoto2").attr("src", "files/RedOlympus.jpg");
+        // Olympus Missing
+      });
+      d3.select("#b2-step5").on('stepin', function(e) {
+      d3.select("#scrollyPhoto2").attr("src", "files/RedOlympus1.jpg");
+        // Olympus missing (2)
+      });
+
+      // ─── BEAT 3 step listeners ───────────────────────────────
+      d3.select("#b3-step1").on('stepin', function(e) {
+      d3.select("#scrollyPhoto3").attr("src", "files/Adams1.jpg");
+        // Mt. Adams unmarked
+      });
+      d3.select("#b3-step2").on('stepin', function(e) {
+      d3.select("#scrollyPhoto3").attr("src", "files/Adams2.jpg");
+        // Clark journal entry
+      });
+      d3.select("#b3-step3").on('stepin', function(e) {
+      d3.select("#scrollyPhoto3").attr("src", "files/Cascades1.jpg");
+        // North Cascades
+      });
+      d3.select("#b3-step4").on('stepin', function(e) {
+      d3.select("#scrollyPhoto3").attr("src", "files/CraterLake1.jpg");
+        // Crater Lake
+      });
+      d3.select("#b3-step5").on('stepin', function(e) {
+      d3.select("#scrollyPhoto3").attr("src", "files/Sierra1.jpg");
+        // Sierra Nevada
+      });
+      d3.select("#b3-step6").on('stepin', function(e) {
+        // Spanish vs English on map
+      });
+      d3.select("#b3-step7").on('stepin', function(e) {
+        // Beacom quote
+      });
+
+      // ─── BEAT 4 step listeners ───────────────────────────────
+      d3.select("#b4-step1").on('stepin', function(e) {
+        // new cities
+      });
+      d3.select("#b4-step2").on('stepin', function(e) {
+        // bridges
+      });
+      d3.select("#b4-step3").on('stepin', function(e) {
+        // political boundaries
+      });
+      d3.select("#b4-step4").on('stepin', function(e) {
+        // reservoirs
+      });
+      d3.select("#b4-step5").on('stepin', function(e) {
+        // St. Helens eruption
+      });
+
+      // ─── BEAT 5 step listeners ───────────────────────────────
+      d3.select("#b5-step1").on('stepin', function(e) {
+        // satellite imagery today
+      });
+      d3.select("#b5-step2").on('stepin', function(e) {
+        // get directions now
+      });
+      d3.select("#b5-step3").on('stepin', function(e) {
+        // Nicolas King blank map appears
+      });
+      d3.select("#b5-step4").on('stepin', function(e) {
+        // clean slate
+      });
+
+    </script>
+
+    <!-- ─── SCROLLAMA SETUP (one instance per section) ──────── -->
+    <script>
+      function makeScroller(sectionId, stepSelector) {
+        const sc = scrollama();
+        sc.setup({
+          step: sectionId + " " + stepSelector,
+          offset: 0.60,
+          debug: false
+        })
+        .onStepEnter(function({ element, index, direction }) {
+          element.dispatchEvent(new CustomEvent('stepin', { detail: { direction } }));
+        })
+        .onStepExit(function({ element, index, direction }) {
+          element.dispatchEvent(new CustomEvent('stepout', { detail: { direction } }));
+        });
+        window.addEventListener("resize", sc.resize);
+        return sc;
+      }
+
+      makeScroller("#scrolly",  ".scrolly-overlay .step");
+      makeScroller("#scrolly2", ".scrolly-overlay .step2");
+      makeScroller("#scrolly3", ".scrolly-overlay .step");
+      makeScroller("#scrolly4", ".scrolly-overlay .step2");
+      makeScroller("#scrolly5", ".scrolly-overlay .step");
+    </script>
+
+    <!-- ─── MOBILE MODAL ─────────────────────────────────────── -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.innerWidth <= 900) {
+          document.getElementById("deviceModal").style.display = "flex";
+        }
+        document.getElementById("continueBtn").addEventListener("click", function () {
+          document.getElementById("deviceModal").style.display = "none";
+        });
+      });
+    </script>
+
+  </body>
+</html>
