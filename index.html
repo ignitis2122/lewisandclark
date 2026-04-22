@@ -411,19 +411,26 @@
         </div>
 
         <div class="step" id="b3-step4">
-          <p>Step 4 — North Cascades: understated and ignored. [highlight + photo]</p>
+          <p>Continuing on mountains, the North Cascade's magnificence is understated and even completely ignored.</p>
         </div>
 
         <div class="step" id="b3-step5">
-          <p>Step 5 — Crater Lake: undiscovered until 1853. [point out absence]</p>
+          <p>Today, Cascades National Park is one of the Pacific Northwest's most beautiful sites and sights, and yet remains the 2nd least visited national park in the contiguous United States. To me, this suggests that not too much has changed since Lewis and Clark made their journey west - many still end up missing these mountains.</p>
         </div>
 
         <div class="step" id="b3-step6">
-          <p>Step 6 — Upper map vs. lower: Spanish vs. English. [annotation]</p>
+          <p>Apart from the Rockies, which are well-detailed, large mountain ranges are underrepresented on the map. In addition to the Cascades, California's Sierra Nevada and extremely mountainous landscape (with the tallest peaks in the continental US!) is depicted by a blank slate, and a long row of mini mountains on the coast.</p>
         </div>
 
         <div class="step" id="b3-step7">
-          <p>Step 7 — Beacom quote: "first time anybody saw the western half…"</p>
+          <p>Crater Lake, one of America's most famous lakes and national parks, is also not on the map. In fact, it wasn't discovered by settlers until 1853. The lake, famous for its deep blue waters, island in the center, and being the deepest lake in the United States, is also inaccessible for most of the year. 
+</p>
+       <div class="step" id="b3-step8">
+        <p>The upper part of the map is much more detailed than the rest (and also in a different language).</p>
+        </div>
+               <div class="step" id="b3-step9">
+          <p>So, much of the map is left blank, or described in miniscule detail. Lewis and Clark left from St. Louis in 1804 with little to no idea of what the Western half of the continent looked like. Their task was to map it. They didn't know that they were missing many of these landmarks.</p>
+        </div>
         </div>
 
         <!-- Add more steps here as needed -->
@@ -451,25 +458,33 @@
       <div class="scrolly-overlay">
 
         <div class="step2" id="b4-step1">
-          <p>Step 1 — New cities added to the landscape. [add on map]</p>
+          <p>Much has changed on the map since Lewis and Clark ventured west. </p>
         </div>
 
         <div class="step2" id="b4-step2">
-          <p>Step 2 — Bridges and infrastructure, changing navigation. [add on map]</p>
+          <p>Development has brought new cities and settlements,</p>
         </div>
 
         <div class="step2" id="b4-step3">
-          <p>Step 3 — Political boundaries: new states, territories. [add on map]</p>
+          <p>bridges, changing the way we navigate,</p>
         </div>
 
         <div class="step2" id="b4-step4">
-          <p>Step 4 — Manmade lakes & reservoirs. [add on map / Yale Lake]</p>
+          <p>political developments, adding imaginary boundaries on the natural world,</p>
         </div>
 
         <div class="step2" id="b4-step5">
-          <p>Step 5 — The landscape itself changed: Mt. St. Helens eruption.</p>
+          <p>many manmade lakes and reservoirs, enhancing the landscape's natural beauty,</p>
         </div>
 
+        <div class="step2" id="b4-step6">
+          <p>or the landscape itself has changed through geologic means.</p>
+        </div>
+
+
+        <div class="step2" id="b4-step7">
+          <p>Even if Clark had been omniscient and been able to map the entire continent accurate to the millimeter, it would look very different today.</p>
+        </div>
         <!-- Add more steps here as needed -->
         <div style="height: 60vh;"></div>
       </div>
@@ -491,19 +506,19 @@
       <div class="scrolly-overlay">
 
         <div class="step" id="b5-step1">
-          <p>Step 1 — Today we can open our phones and see satellite imagery.</p>
+          <p>text</p>
         </div>
 
         <div class="step" id="b5-step2">
-          <p>Step 2 — We can get directions to Crater Lake or Olympic National Park.</p>
+          <p>text</p>
         </div>
 
         <div class="step" id="b5-step3">
-          <p>Step 3 — Lewis and Clark left armed only with Nicolas King's Blank Map of 1803.</p>
+          <p>text</p>
         </div>
 
         <div class="step" id="b5-step4">
-          <p>Step 4 — A clean slate of the western half of the continent — both figuratively and literally.</p>
+          <p>text</p>
         </div>
 
         <!-- Add more steps here as needed -->
@@ -512,7 +527,7 @@
     </section>
 
     <div class="outro2">
-      <p>[Closing text here]</p>
+      <p>text</p>
     </div>
 
     <!-- Mobile Warning Modal -->
@@ -612,29 +627,39 @@
         // Sierra Nevada
       });
       d3.select("#b3-step6").on('stepin', function(e) {
-        // Spanish vs English on map
+        
       });
       d3.select("#b3-step7").on('stepin', function(e) {
         // Beacom quote
       });
-
+      d3.select("#b3-step8").on('stepin', function(e) {
+        // Spanish vs English on map
+      });
+      d3.select("#b3-step9").on('stepin', function(e) {
+        // Beacom quote
+      });
       // ─── BEAT 4 step listeners ───────────────────────────────
       d3.select("#b4-step1").on('stepin', function(e) {
         // new cities
       });
       d3.select("#b4-step2").on('stepin', function(e) {
-        // bridges
+        // new cities
       });
       d3.select("#b4-step3").on('stepin', function(e) {
-        // political boundaries
+        // bridges
       });
       d3.select("#b4-step4").on('stepin', function(e) {
+        // boundaries
+      });
+      d3.select("#b4-step5").on('stepin', function(e) {
         // reservoirs
       });
       d3.select("#b4-step5").on('stepin', function(e) {
         // St. Helens eruption
       });
-
+      d3.select("#b4-step5").on('stepin', function(e) {
+        // Different Map
+      });      
       // ─── BEAT 5 step listeners ───────────────────────────────
       d3.select("#b5-step1").on('stepin', function(e) {
         // satellite imagery today
