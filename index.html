@@ -190,14 +190,12 @@
       @media only screen and (min-width: 700px) {
   #scrolly.side-by-side,
   #scrolly3.side-by-side,
-  #scrolly4.side-by-side,
-  #scrolly5.side-by-side {
+  #scrolly4.side-by-side {
     display: flex;
   }
   #scrolly.side-by-side > div,
   #scrolly3.side-by-side > div,
-  #scrolly4.side-by-side > div,
-  #scrolly5.side-by-side > div {
+  #scrolly4.side-by-side > div {
     flex-basis: 0;
     flex-grow: 1;
     flex-shrink: 1;
@@ -205,8 +203,7 @@
   }
   #scrolly.side-by-side .scrolly-overlay,
   #scrolly3.side-by-side .scrolly-overlay,
-  #scrolly4.side-by-side .scrolly-overlay,
-  #scrolly5.side-by-side .scrolly-overlay {
+  #scrolly4.side-by-side .scrolly-overlay {
     margin-top: 70vh;
     order: 0;
     min-width: 15rem;
@@ -214,11 +211,48 @@
   }
   #scrolly.side-by-side .sticky-thing,
   #scrolly3.side-by-side .sticky-thing,
-  #scrolly4.side-by-side .sticky-thing,
-  #scrolly5.side-by-side .sticky-thing {
+  #scrolly4.side-by-side .sticky-thing {
     order: 1;
     flex-grow: 2;
   }
+}
+
+/* Beat 5 custom layout */
+#scrolly5 {
+  position: relative;
+  display: block;
+}
+#scrolly5 .sticky-thing {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+}
+#zoomBox5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+#scrollyPhoto5 {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  margin: 0;
+  display: block;
+}
+#scrolly5 .scrolly-overlay {
+  position: relative;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: 20px;
+  max-width: 30rem;
+  padding-top: 70vh;
 }
 
 /* Beat 2 custom layout */
@@ -390,7 +424,7 @@
       <div class="sticky-thing">
         <div class="zoomBox" id="zoomBox3">
           <!-- STICKY VISUAL 3: annotated map -->
-          <img id="scrollyPhoto3" class="photoDiv" src="images/PLACEHOLDER_map_anno.jpg">
+          <img id="scrollyPhoto3" class="photoDiv" src="files/Olympus0.jpg">
         </div>
       </div>
       <div class="scrolly-overlay">
@@ -404,10 +438,11 @@
     
         </div>
         <div class="step" id="b3-step3">
-          <p>which was the path Lewis and Clark traversed around late October and early November of 1805 - around the same time, Clark writes in his journal about extreme rain, hail, and thunderstorms [add journal entry]. I don't blame him for not seeing the mountain.</p>
-          <br>
-          <p>"a tremendious thunder Storm abt. 3 oClock this morning accompanied by wind from the S W. and Hail, this Storm of hard Clap's thunder Lighting and hail until about 6 oClock at intervals    it then became light for a Short time when the heavens became darkined by a black Cloud from the S, W, & a hard rain Suckceeded which lasted untill 12 oClock with a hard wind which raised the Seas tremendiously high braking with great force and fury against the rocks & trees on which we lie, as our Situation became Seriously dangerous,"</p>
-          <img src="files/journal.png" style="max-width: 300px; margin: 0 auto">
+        <p>which was the path Lewis and Clark traversed around late October and early November of 1805 - around the same time, Clark writes in his journal about extreme rain, hail, and thunderstorms. I don't blame him for not seeing the mountain.</p>
+        <div style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem;">
+        <p style="flex: 1; font-size: 0.9rem; font-style: italic;">"a tremendious thunder Storm abt. 3 oClock this morning accompanied by wind from the S W. and Hail, this Storm of hard Clap's thunder Lighting and hail until about 6 oClock at intervals    it then became light for a Short time when the heavens became darkined by a black Cloud from the S, W, & a hard rain Suckceeded which lasted untill 12 oClock with a hard wind which raised the Seas tremendiously high braking with great force and fury against the rocks & trees on which we lie, as our Situation became Seriously dangerous,"</p>
+        <img src="files/journal.png" style="width: 300px; flex-shrink: 0;">
+        </div>
         </div>
 
         <div class="step" id="b3-step4">
@@ -612,24 +647,24 @@
       });
       d3.select("#b3-step2").on('stepin', function(e) {
       d3.select("#scrollyPhoto3").attr("src", "files/Adams2.jpg");
-        // Clark journal entry
+      // multnomah
       });
       d3.select("#b3-step3").on('stepin', function(e) {
-      d3.select("#scrollyPhoto3").attr("src", "files/Cascades1.jpg");
-        // North Cascades
+          // Clark journal entry
       });
       d3.select("#b3-step4").on('stepin', function(e) {
-      d3.select("#scrollyPhoto3").attr("src", "files/CraterLake1.jpg");
-        // Crater Lake
+      d3.select("#scrollyPhoto3").attr("src", "files/Cascades1.jpg");
+        // cascades
       });
       d3.select("#b3-step5").on('stepin', function(e) {
-      d3.select("#scrollyPhoto3").attr("src", "files/Sierra1.jpg");
+      d3.select("#scrollyPhoto3").attr("src", "files/Cascades1.jpg");
         // Sierra Nevada
       });
       d3.select("#b3-step6").on('stepin', function(e) {
-        
+      d3.select("#scrollyPhoto3").attr("src", "files/Sierra1.jpg");
       });
       d3.select("#b3-step7").on('stepin', function(e) {
+        d3.select("#scrollyPhoto3").attr("src", "files/CraterLake1.jpg");
         // Beacom quote
       });
       d3.select("#b3-step8").on('stepin', function(e) {
@@ -662,17 +697,19 @@
       });      
       // ─── BEAT 5 step listeners ───────────────────────────────
       d3.select("#b5-step1").on('stepin', function(e) {
+      d3.select("#scrollyPhoto5").attr("src", "files/Satellite.png");
         // satellite imagery today
       });
       d3.select("#b5-step2").on('stepin', function(e) {
-      d3.select("#scrollyPhoto3").attr("src", "files/NCBlankMap.jpg");
+      d3.select("#scrollyPhoto5").attr("src", "files/NCBlankMap.jpg");
         // get directions now
       });
       d3.select("#b5-step3").on('stepin', function(e) {
-      d3.select("#scrollyPhoto3").attr("src", "files/NCBlankMap.jpg");
+      d3.select("#scrollyPhoto5").attr("src", "files/NCBlankMap.jpg");
         // Nicolas King blank map appears
       });
       d3.select("#b5-step4").on('stepin', function(e) {
+      d3.select("#scrollyPhoto5").attr("src", "files/hires.png"); 
         // clean slate
       });
 
